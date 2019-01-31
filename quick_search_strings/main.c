@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 /*
- *  basic kmp.
+ *  optimal kmp.
+ *  change bad chararters list number to -1
  */
 int main(int argc, char** argv) {
     char message[20] = "abcdabaaaaaaaabcdabd";
@@ -40,8 +42,8 @@ void list(char *key, int key_size, int *next) {
                 next[num]++;
             }
         }
+        if (key[num] == key[0])
+            next[num] = -1;
     }
-    next[0] = -1;
     return;
 }
-

@@ -3,14 +3,8 @@
 
 /*
  * Kmp algorithm-based optimization algorithm for text analysis.
- * However, not very perfect
+ * I think it is ok, but I have not tested too much.
  */
-int main(int argc, char** argv) {
-    char message[20] = "aacdabaabcdabdbcdabd";
-    char key[7] = "abcdabd";
-    printf("%d\n", kmp(message, key, 20, 7));
-}
-
 int kmp(char *message, char *key, int message_size, int key_size) {
     //    int next[7]={};
     int next[80] = {};
@@ -32,10 +26,17 @@ int kmp(char *message, char *key, int message_size, int key_size) {
 
 void list(char *key, int key_size, int *next) {
     for (int num = 0; num != key_size; num++) {
-
         int same = 0;
         for(int i=1;i!=key_size;i++){
             if(key[0]==key[i]){
+                for(int n=0;n<=num;n++){
+                  if(n+i>=key_size)
+                      break;
+                  if(key[n+i]!=key[n]){
+                      i=0;
+                      break;
+                  }
+                }
                 same=i;
                 break;
             }

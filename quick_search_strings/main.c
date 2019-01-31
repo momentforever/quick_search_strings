@@ -2,20 +2,21 @@
 #include <stdlib.h>
 
 /*
- *  optimal kmp.
- *  change bad chararters list number to -1
+ * Kmp algorithm-based optimization algorithm for text analysis.
+ * However, not very perfect
  */
 int main(int argc, char** argv) {
-    char message[20] = "abcdabaaaaaaaabcdabd";
-    char key[7] = "aaaaaaa";
+    char message[20] = "aacdabaabcdabdbcdabd";
+    char key[7] = "abcdabd";
     printf("%d\n", kmp(message, key, 20, 7));
 }
 
 int kmp(char *message, char *key, int message_size, int key_size) {
+    //    int next[7]={};
     int next[80] = {};
     list(key, key_size, next);
-    int x = 0, y = 0;
-    while (x <= message_size - key_size || y != 0) {
+    int x = message_size - key_size, y = 0;
+    while (x >= 0 || y != 0) {
         if (y == key_size)
             return x - y;
         if (message[x] == key[y]) {
@@ -31,19 +32,22 @@ int kmp(char *message, char *key, int message_size, int key_size) {
 
 void list(char *key, int key_size, int *next) {
     for (int num = 0; num != key_size; num++) {
-        for (int x = 0, y = 1; y <= num - 1; y++) {
-            if (next[num ] != 0 && key[y] != key[x]) {
-                x = 0;
-                y = y - next[num] + 1;
-                next[num ] = 0;
-            }
-            if (key[y] == key[x]) {
-                x++;
-                next[num]++;
+
+        int same = 0;
+        for(int i=1;i!=key_size;i++){
+            if(key[0]==key[i]){
+                same=i;
+                break;
             }
         }
-        if (key[num] == key[0])
-            next[num] = -1;
+        next[num+1]=same; 
+    
+    }
+    
+    next[0]=key_size-1;
+   
+    for(int num=0;num!=key_size;num++){
+        next[num]=key_size+num-next[num];
     }
     return;
 }

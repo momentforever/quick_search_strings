@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
+/* 1.0
  * Kmp algorithm-based optimization algorithm for text analysis.
  * I think it is ok, but I have not tested too much.
  */
